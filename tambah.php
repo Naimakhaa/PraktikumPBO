@@ -2,10 +2,10 @@
 require_once "config/Database.php";
 require_once "classes/Mahasiswa.php";
 
-$database = new Database();
-$db = $database->getConnection();
+$db = new Database();
+$conn = $db->getConnection();
 
-$mhs = new Mahasiswa($db);
+$mhs = new Mahasiswa($conn);
 
 if ($_POST) {
     $mhs->nama = $_POST['nama'];
@@ -14,14 +14,15 @@ if ($_POST) {
 
     if ($mhs->create()) {
         header("Location: index.php");
+        exit;
     } else {
         echo "Gagal menambah data.";
     }
 }
 ?>
 <form method="POST">
-    Nama: <input type="text" name="nama"required><br>
-    NIM: <input typeV="text" name="nim"required><br>
-    Jurusan: <input type="text" name="jurusan"required><br>
+    Nama: <input type="text" name="nama" required><br>
+    NIM: <input type="text" name="nim" required><br>
+    Jurusan: <input type="text" name="jurusan" required><br>
     <button type="submit">Simpan</button>
 </form>
