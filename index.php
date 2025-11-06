@@ -8,7 +8,6 @@ $conn = $db->getConnection();
 $mhs = new Mahasiswa($conn);
 $data = $mhs->readAll();
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
