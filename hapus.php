@@ -9,6 +9,6 @@ $mhs = new Mahasiswa($db);
 $mhs->id = $_GET['id'];
 
 if ($mhs->delete()) {
-    header("Location: index.php");
+    header("Location: index11.php");
 }
 ?>
