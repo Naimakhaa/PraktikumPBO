@@ -2,6 +2,7 @@
 class Mahasiswa {
     private $conn;
     private $table_name = "mahasiswa";
+
     public $id;
     public $nama;
     public $nim;
@@ -11,9 +12,9 @@ class Mahasiswa {
         $this->conn = $db;
     }
 
-    // Create
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " (nama, nim, jurusan) VALUES (:nama, :nim, :jurusan)";
+        $query = "INSERT INTO " . $this->table_name . " (nama, nim, jurusan)
+                  VALUES (:nama, :nim, :jurusan)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nama", $this->nama);
         $stmt->bindParam(":nim", $this->nim);
@@ -21,7 +22,6 @@ class Mahasiswa {
         return $stmt->execute();
     }
 
-    // Read
     public function readAll() {
         $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
@@ -29,9 +29,10 @@ class Mahasiswa {
         return $stmt;
     }
 
-    // Update
     public function update() {
-        $query = "UPDATE " . $this->table_name . " SET nama=:nama, nim=:nim, jurusan=:jurusan WHERE id=:id";
+        $query = "UPDATE " . $this->table_name . "
+                  SET nama=:nama, nim=:nim, jurusan=:jurusan
+                  WHERE id=:id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nama", $this->nama);
         $stmt->bindParam(":nim", $this->nim);
@@ -40,7 +41,6 @@ class Mahasiswa {
         return $stmt->execute();
     }
 
-    // Delete
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id=:id";
         $stmt = $this->conn->prepare($query);

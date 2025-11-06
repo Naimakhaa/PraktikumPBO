@@ -4,6 +4,7 @@ require_once "classes/Mahasiswa.php";
 
 $db = new Database();
 $conn = $db->getConnection();
+
 $mhs = new Mahasiswa($conn);
 
 if ($_POST) {

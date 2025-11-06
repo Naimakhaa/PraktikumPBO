@@ -2,15 +2,13 @@
 require_once "config/Database.php";
 require_once "classes/Mahasiswa.php";
 
-$db = new Database();
-$conn = $db->getConnection();
-$mhs = new Mahasiswa($conn);
+$database = new Database();
+$db = $database->getConnection();
 
-$mhs->id = $_GET['id'] ?? null;
-if ($mhs->id && $mhs->delete()) {
-    header("Location: index.php");
-    exit;
-} else {
-    echo "Gagal menghapus data.";
+$mhs = new Mahasiswa($db);
+$mhs->id = $_GET['id'];
+
+if ($mhs->delete()) {
+    header("Location: index11.php");
 }
 ?>
