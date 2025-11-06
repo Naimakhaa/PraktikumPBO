@@ -1,25 +1,14 @@
 <?php
-class Database {
-    private $db_file = __DIR__ . '/../kampus.db';
-    public $conn;
+$host = 'localhost';
+$dbname = 'nama_database_kamu';
+$username = 'root';
+$password = '';
 
-    public function getConnection() {
-        $this->conn = null;
-        try {
-            $this->conn = new PDO("sqlite:" . $this->db_file);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn->exec("
-                CREATE TABLE IF NOT EXISTS mahasiswa (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    nama TEXT,
-                    nim TEXT UNIQUE,
-                    jurusan TEXT
-                )
-            ");
-        } catch (PDOException $e) {
-            echo "❌ Koneksi gagal: " . $e->getMessage();
-        }
-        return $this->conn;
-    }
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Koneksi berhasil!";
+} catch (PDOException $e) {
+    echo "Koneksi gagal: " . $e->getMessage();
 }
 ?>
