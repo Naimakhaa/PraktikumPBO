@@ -2,16 +2,17 @@
 require_once "config/Database.php";
 require_once "classes/Mahasiswa.php";
 
-$database = new Database();
-$db = $database->getConnection();
+$db = new Database();
+$conn = $db->getConnection();
+$mhs = new Mahasiswa($conn);
 
-$mhs = new Mahasiswa($db);
-$id = $_GET['id'];
+$id = $_GET['id'] ?? null;
+if (!$id) die("ID tidak ditemukan.");
 
-$query = $db->prepare("SELECT * FROM mahasiswa WHERE id=:id");
-$query->bindParam(":id", $id);
-$query->execute();
-$data = $query->fetch(PDO::FETCH_ASSOC);
+$stmt = $conn->prepare("SELECT * FROM mahasiswa WHERE id=:id");
+$stmt->bindParam(":id", $id);
+$stmt->execute();
+$data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_POST) {
     $mhs->id = $id;
@@ -21,12 +22,13 @@ if ($_POST) {
 
     if ($mhs->update()) {
         header("Location: index.php");
+        exit;
     }
 }
 ?>
 <form method="POST">
-    Nama: <input type="text" name="nama" value="<?=$data['nama']?>"><br>
-    NIM: <input type="text" name="nim" value="<?=$data['nim']?>"><br>
-    Jurusan: <input type="text" name="jurusan" value="<?=$data['jurusan']?>"><br>
+    Nama: <input type="text" name="nama" value="<?= $data['nama'] ?>"><br>
+    NIM: <input type="text" name="nim" value="<?= $data['nim'] ?>"><br>
+    Jurusan: <input type="text" name="jurusan" value="<?= $data['jurusan'] ?>"><br>
     <button type="submit">Update</button>
 </form>
